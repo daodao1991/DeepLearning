@@ -35,3 +35,25 @@ def forward(x, train, regularizer):
     conv1 = conv2d(x, conv1_w)
     relu1 = tf.nn.relu(tf.nn.bias_add(conv1, conv1_b))
     pool1 = max_pool_2x2(relu1)
+
+    conv2_w = get_weight([CONV2_SIZE,CONV2_SIZE,CONV1_KERNEL_NUM,CONV2_KERNEL_NUM], regularizer)
+    conv2_b = get_bias([CONV2_KERNEL_NUM])
+    conv2 = conv2d(pool1, conv2_w)
+    relu2 = tf.nn.relu(tf.nn.bias_add(conv2, conv2_b))
+    pool2 = max_pool_2x2(relu2)
+    
+    pool_shape = pool2.get_shape().as_list()
+    # 其中，pool_shape 第一个为 batch_size ,后面三个为特征的 长度，宽度，深度
+    nodes = pool_shape[1] * pool_shape[2] * pool_shape[3] 
+    reshaped = tf.reshape(pool2,[pool_shape[0],nodes])
+                    
+    # 下面是全连接 
+    fc1_w = get_weight([nodes,FC_SIZE],regularizer)
+    fc1_b = get_bias([FC_SIZE])
+    fc1 = tf.nn.relu(tf.matmul(reshaped,fc1_w) + fc1_b)
+    if train: fc1 = tf.nn.dropout(fc1,0.5) 
+                    
+    fc2_w = get_weight([FC_SIZE,OUTPUT_NODE],regularizer)
+    fc2_b = get_bias([OUTPUT_NODE])
+    y = tf.matmul(fc1,fc2_w) + fc2_b
+    return y 
