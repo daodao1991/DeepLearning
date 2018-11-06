@@ -6,7 +6,7 @@ import os
 
 #定义神经网络的参数 784个输入特征 10中分类 中间层有500个结点
 INPUT_NODE = 784
-OUT_NODE = 10
+OUTPUT_NODE = 10
 
 #传入的图片数据 28*28*1 的三维矩阵  标签为10维矩阵
 IMAGE_SIZE = 28
@@ -48,7 +48,7 @@ def inference(input_tensor, train, regularizer):
     # 输入 28 * 28 * 32   输出  14 * 14 * 32
     with tf.name_scope('layer2_pool1'):
         pool1 = tf.nn.max_pool(
-                relu1, ksize=[1,2,2,], strides=[1,2,2,1], padding='SAME')
+                relu1, ksize=[1,2,2,1], strides=[1,2,2,1], padding='SAME')
 
     # 声明第三层卷积层的变量实现前向传播过程。
     # 输入 14 * 14 * 32  输出 14 * 14 * 64
@@ -97,9 +97,9 @@ def inference(input_tensor, train, regularizer):
         fc1_biases = tf.get_variable('bias', [FC_SIZE], initializer=tf.constant_initializer(0.1))
         fc1 = tf.nn.relu(tf.matmul(reshaped, fc1_weights) + fc1_biases)
 
-	#train 为 传入决定是否用dropout的参数
+    #train 为传入决定是否用dropout的参数
         if train:
-            fc1 = tf.nn.dropput(fc1, 0.5)
+            fc1 = tf.nn.dropout(fc1, 0.5)
 
     # 声明第六层全连接层的变量，并实现前向传播过程
     # 512->10  输出通过softmax 后就得到最后的分类结果
@@ -109,7 +109,7 @@ def inference(input_tensor, train, regularizer):
                 tf.truncated_normal_initializer(stddev=0.1))
         if regularizer != None:
             tf.add_to_collection('losses', regularizer(fc2_weights))
-        fc2_biases = tf.get_variable('bias', [NUM_LABELS], initialzier =
+        fc2_biases = tf.get_variable('bias', [NUM_LABELS], initializer =
                 tf.constant_initializer(0.1))
         logit = tf.matmul(fc1, fc2_weights) + fc2_biases
 
