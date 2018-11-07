@@ -58,7 +58,7 @@ def train(mnist):
     #初始化tensorflow持久化类
     saver = tf.train.Saver() 
     with tf.Session() as sess:
-        init_op = tf.initialize_all_variables()
+        init_op = tf.global_variables_initializer()
         sess.run(init_op)
         #在训练过程中不测试模型在验证集中的表现，验证和测试的过程由独立程序执行
         for i in range(TRAINING_STEPS):
