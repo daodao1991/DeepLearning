@@ -1,5 +1,5 @@
 #config path and files
-IMAGE_SIZE = 224
+IMAGE_SIZE = 227
 SAVE_MODEL_PATH = './PreTrainModel/model_save.model'
 FINE_TUNE_MODEL_PATH = './FineTuneModel/fine_tune_model_save.model'
 TRAIN_LIST = './train_list.txt'
