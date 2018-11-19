@@ -33,7 +33,7 @@ def resize_image(in_image, new_width, new_height, out_image=None, resize_mode=cv
 
 
 def clip_pic(img, rect):
-    '''修建图片
+    '''修剪图片
 
     Parameters
     ------------
@@ -66,13 +66,12 @@ def view_bar(message, num, total):
     sys.stdout.flush()
 
 
-def show_rectangle(img_path, regions, message):
+def show_rectangle(img_path, regions):
     '''显示矩形框
     Parameters
     ------------
         img_path: 要显示的原图片
         regions:  要在原图片上标注的矩形框的参数
-        message:  在矩形框周围添加的信息
     '''
     fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(6, 6))
     img = skimage.io.imread(img_path)
@@ -165,7 +164,7 @@ def load_train_proposals(datafile, num_class, save_path, threshold=0.5, is_svm=F
             if (r['rect'][2] * r['rect'][3]) < 500:
                 continue
 
-            ### 调整大小为224 * 224以进行输入
+            ### 调整大小为227 * 227以进行输入
             proposal_img, proposal_vertice = clip_pic(img, r['rect'])
             # 删除空的边框
             if len(proposal_img) == 0:
