@@ -12,8 +12,8 @@ import cv2
 import tflearn
 from tflearn.layers.core import input_data, dropout, fully_connected
 from tflearn.layers.conv import conv_2d, max_pool_2d
-from tflearn.layers.normalization import local_response_ normalization
-from tflearn.layers.estimator import regresssion
+from tflearn.layers.normalization import local_response_normalization
+from tflearn.layers.estimator import regression
 import preprocessing_RCNN as prep
 
 
@@ -31,7 +31,7 @@ def load_data(datafile, num_class, save=False, save_path='dataset.pkl'):
         images.append(np_img)
 
         index = int(tmp[1])
-        label = np.zeros(nums_class)
+        label = np.zeros(num_class)
         label[index] = 1
         labels.append(label)
     if save:
@@ -94,7 +94,7 @@ def predict(network, modelfile, images):
         return model.predict(images)
 
 
-if _name__ == '__main__':
+if __name__ == '__main__':
     X, Y = load_data(config.TRAIN_LIST, config.TRAIN_CLASS)
     net = create_AlexNet(config.TRAIN_CLASS)
     train(net, X, Y, config.SAVE_MODEL_PATH)
