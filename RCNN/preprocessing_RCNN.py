@@ -11,7 +11,7 @@ import random
 import math
 import sys
 import skimage   #scikit-image模块
-import matplotlib.pylot as plt
+import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
 
@@ -202,12 +202,12 @@ def load_train_proposals(datafile, num_class, save_path, threshold=0.5, is_svm=F
                 else:
                     label[index] = 1
                 labels.append(label)
-        view_bar("processing image of %s" % datafile.split('\\')[-1].strip(), num+1, len(train_list))
+        view_bar("processing image of %s" % datafile.split('/')[-1].strip(), num+1, len(train_list))
         if save:
             # np.save()将数据以Numpy专用的二进制格式保存在.npy文件中
             # 这种方式建议在不需要看保存文件内容的情况下使用
             np.save((os.path.join(save_path, tmp[0].split('/')[-1].split('.')[0].strip()) + 
-                '_data.npy')，[images, labels])
+                '_data.npy'), [images, labels])
     print(' ')
     fp.close()
     
