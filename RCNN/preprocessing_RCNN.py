@@ -17,7 +17,7 @@ import matplotlib.patches as mpatches
 
 def resize_image(in_image, new_width, new_height, out_image=None, resize_mode=cv2.INTER_CUBIC):
     '''
-    # 将Image文件给修改成224*224的图片大小（当然，RGB三个频道我们保持不变）
+    # 将Image文件给修改成227*227的图片大小（当然，RGB三个频道我们保持不变）
         
     :param in_image: 输入的图片 The image to resize.
     :param new_width: `int`. The image new width.

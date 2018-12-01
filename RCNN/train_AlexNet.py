@@ -79,7 +79,7 @@ def train(network, X, Y, save_model_path):
         model.load(save_model_path)
         print('load model...')
     for _ in range(5):
-        model.fit(X, Y, n_epoch=1000, validation_set=0.1, shuffle=True, 
+        model.fit(X, Y, n_epoch=100, validation_set=0.1, shuffle=True,
                   show_metric=True, batch_size=64, snapshot_step=200, 
                   snapshot_epoch=False,
                   run_id='alexnetwork_oxflowers17')
@@ -90,7 +90,8 @@ def train(network, X, Y, save_model_path):
 
 def predict(network, modelfile, images):
         model = tflearn.DNN(network)
-        model.load(modelfile)
+        if os.path.isfile(modelfile):
+            model.load(modelfile)
         return model.predict(images)
 
 

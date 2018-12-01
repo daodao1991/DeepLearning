@@ -59,7 +59,8 @@ def image_proposal(img_path):
 # Load training images
 def generate_single_svm_train(train_file):
     save_path = train_file.rsplit('.', 1)[0].strip()
-    save_path = os.mkdir(save_path)
+    if os.path.isdir(save_path):
+        os.mkdir(save_path)
     if len(os.listdir(save_path)) == 0:
         print("reading %s's svm dataset" % train_file.split('/')[-1])
         prep.load_train_proposals(train_file, 2, save_path, threshold=0.3, is_svm=True, save=True)
